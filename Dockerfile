@@ -31,6 +31,10 @@ RUN chmod 440 /etc/sudoers.d/koudaiii
 ADD ./sshd_config /etc/ssh/sshd_config
 RUN /etc/init.d/sshd start;/etc/init.d/sshd stop
 
+# setup TimeZone
+RUN mv /etc/localtime /etc/localtime.org
+RUN cp /usr/share/zoneinfo/Japan /etc/localtime
+
 # expose for sshd
 EXPOSE 2222
 
