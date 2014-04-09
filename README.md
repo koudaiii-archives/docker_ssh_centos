@@ -30,6 +30,7 @@ Run container
     docker run -p 22 -d user/sshd
 
 Get Port Number
+
     docker ps
 
 SSH access to your container
@@ -37,6 +38,7 @@ SSH access to your container
     ssh localhost -p port_number
 
 log
-https://gist.github.com/10224422.git
+
+    https://gist.github.com/10224422.git
 
 
