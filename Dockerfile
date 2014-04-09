@@ -28,14 +28,14 @@ RUN echo "koudaiii ALL=(ALL) NOPASSWD:ALL" >> /etc/sudoers.d/koudaiii
 RUN chmod 440 /etc/sudoers.d/koudaiii
 
 # setup sshd
-ADD ./sshd_config /etc/ssh/sshd_config
-RUN /etc/init.d/sshd start;/etc/init.d/sshd stop
+RUN ssh-keygen -q -N "" -t dsa -f /etc/ssh/ssh_host_dsa_key && ssh-keygen -q -N "" -t rsa -f /etc/ssh/ssh_host_rsa_key && sed -i "s/#UsePrivilegeSeparation.*/UsePrivilegeSeparation no/g" /etc/ssh/sshd_config && sed -i "s/UsePAM.*/UsePAM no/g" /etc/ssh/sshd_config
+RUN rpm -i http://dl.fedoraproject.org/pub/epel/6/x86_64/pwgen-2.06-5.el6.x86_64.rpm
 
 # setup TimeZone
 RUN mv /etc/localtime /etc/localtime.org
 RUN cp /usr/share/zoneinfo/Japan /etc/localtime
 
 # expose for sshd
-EXPOSE 2222
+EXPOSE 22
 
 CMD ["/usr/sbin/sshd","-D"]
