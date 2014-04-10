@@ -35,7 +35,14 @@ RUN rpm -i http://dl.fedoraproject.org/pub/epel/6/x86_64/pwgen-2.06-5.el6.x86_64
 RUN mv /etc/localtime /etc/localtime.org
 RUN cp /usr/share/zoneinfo/Japan /etc/localtime
 
+# setup supervisor
+RUN wget http://peak.telecommunity.com/dist/ez_setup.py;python ez_setup.py;easy_install distribute;
+RUN wget https://raw.github.com/pypa/pip/master/contrib/get-pip.py;python get-pip.py;
+RUN pip install supervisor
+
+ADD ./supervisord.conf /etc/supervisord.conf
+
 # expose for sshd
 EXPOSE 22
 
-CMD ["/usr/sbin/sshd","-D"]
+CMD ["/usr/bin/supervisord"]
